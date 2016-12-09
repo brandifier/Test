@@ -1,0 +1,115 @@
+<html>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="jquery.mobile-1.4.5.css">
+<script src="jquery-1.11.3.min.js"></script>
+<script src="jquery.mobile-1.4.5.js"></script>
+
+<script src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
+	
+	
+<style type="text/css">
+
+#content{
+  /*really import or wont show*/
+  padding:0;
+  position:absolute !important;
+  top:44px !important;
+  right:0;
+  bottom:0px !important;
+  left:0 !important;
+  background-color:'green';
+}
+
+#map-canvas{
+  height:100%;
+  background-color:'red': 
+}
+
+</style>
+
+	
+
+<script>
+//initialization event
+
+$(document).on("pagecreate",function(){
+
+ var latlong=new google.maps.LatLng(1.2973,103.8510) 
+
+                     
+var mapProp = {center:latlong,zoom:19,mapTypeId:google.maps.MapTypeId.ROADMAP};
+var map=new google.maps.Map(document.getElementById("map-canvas"),mapProp);   
+
+var marker1 = new google.maps.Marker({
+position:latlong, title:"Singapore Art Museum",
+
+animation:google.maps.Animation.Drop
+});
+   marker1.setMap(map); 
+var marker2 = new google.maps.Marker({
+position: new google.maps.LatLng(1.3324,103.777),
+title: "Ngee Ann Polytechnic",
+animation:google.maps.Animation.Drop
+});
+marker2.setMap(map);
+ 
+var marker3 = new google.maps.Marker({
+position: new google.maps.LatLng(1.3152,103.7637),
+title: "Clementi Mall",
+animation:google.maps.Animation.Drop
+});
+marker3.setMap(map);
+
+var lineCoord = [];
+lineCoord.push(latlong);
+lineCoord.push({lat:1.3152,lng:103.7637});
+lineCoord.push({lat:1.3324,lng:103.777});
+
+var path = new google.maps.Polyline({
+path : lineCoord,
+geodesic:true,
+strokeColor:'yellow',
+strokeOpacity:1.0,
+strokeWeight:2
+});
+ path.setMap(map);
+ 
+   marker1.addListener('click',function(){
+   //marker1.setAnimation(google.maps.Animation.BOUNCE);
+   info.open(map,marker1);
+   });
+  var str = "";
+str = str + "<h3> This is Singapore Art Museum </h3>";
+str = str + "<p> Visit the <a href='https://www.singaporeartmuseum.sg/'>website</a> ";
+
+
+
+   var info = new google.maps.InfoWindow({
+   content: str
+   });
+});
+
+
+</script>
+</head>
+<body>
+
+<div data-role="page" id="pageone">
+    <div data-role="header">
+    <h1>Map demo </h1>
+    </div> 
+    <div data-role="main" class="ui-content">
+    
+    <div data-role="content" id="content">
+          <div id="map-canvas"></div>
+     </div>
+    </div> 
+ 
+</div>
+
+
+</body>
+</html>
